@@ -1,4 +1,4 @@
-class Person(var firstname: String, var surname: String, var phonenumber: Int, var email: String)
+class Person(var firstname: String, var surname: String, var phonenumber: String, var email: String)
 {
     init {
         this.firstname = firstname
