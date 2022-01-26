@@ -1,9 +1,15 @@
 val informationlist = ArrayList<Person>()
-var name: String = ""
-var Lastname: String = ""
-var phonenumber: String = ""
-var email: String = ""
-var choice: String = ""
+var name: String = null.toString()
+var Lastname: String = null.toString()
+var phonenumber: String = null.toString()
+var email: String = null.toString()
+var choice: String = null.toString()
+var choice2: String = null.toString()
+var email_adress: String = null.toString()
+var new_name: String = null.toString()
+var new_surname: String = null.toString()
+var new_phonenumber: String = null.toString()
+var new_email_adress: String = null.toString()
 
 fun meny()
 {
@@ -27,15 +33,15 @@ fun show_contacts()
 }
 
 fun add_contact(){
-    println("Please write name, lastname, phonenumber and email on individual lines to add a person. Iff succeded, skapad kontakt wil be displayed ")
+    println("Please write name, lastname, phone-number and email on individual lines to add a person. Iff suceded, skapad kontakt wil be displayed ")
     informationlist.add(Person(name, Lastname, phonenumber, email))
 }
 
 fun remove_contact()
 {
     println("Please write the email adress of the person that you arte trying to remove")
-    var email_adress: String = readln()
-    for (number: Int in 0..informationlist.count())
+    email_adress = readln()
+    for (number: Int in 0..informationlist.count()-1)
     {
         if (email_adress == informationlist[number].email)
         {
@@ -44,10 +50,60 @@ fun remove_contact()
     }
 }
 
-fun Show_in_alphabeticall_order()
+fun Show_in_alphabetical_order()
 {
-    var sortedList = informationlist.sortedWith(compareBy({ it.email }))
+    val sortedList = informationlist.sortedWith(compareBy({ it.firstname }))
+    for (elements in sortedList){
+        println(" Firstname: " + elements.firstname +
+                " Lastname: " + elements.surname + " " +
+                "phone-number " + elements.phonenumber +
+                " Email: " + elements.email)
+    }
 }
+
+fun Change_information_of_contact{
+    println("Please write the email of the adress that you want to change!")
+    email_adress = readln()
+    for (number: Int in 0..informationlist.count()-1)
+    {
+        if (email_adress == informationlist[number].email)
+        {
+            println("the email is in the list and the information can be changed. What do you want to change?")
+        }
+        println("1. Change name" +
+                "2. Change surname" +
+                "3. Change phonenumber" +
+                "4. Change email")
+
+        fun change_name(){
+            new_email_adress = readln()
+            informationlist[number].email = new_email_adress
+        }
+
+        fun change_Surname(){
+             new_surname = readln()
+            informationlist[number].surname= new_surname
+        }
+
+        fun change_phonenumber(){
+            new_phonenumber = readln()
+            informationlist[number].phonenumber = new_phonenumber
+        }
+
+        fun change_email(){
+            new_email_adress = readln()
+            informationlist[number].email = new_email_adress
+        }
+
+        when(choice2){
+            1.toString() -> change_name()
+            2.toString() -> change_Surname()
+            3.toString() -> change_phonenumber()
+            4.toString() -> change_email()
+        }
+    }
+}
+
 
 fun Read_to_file()
 {
@@ -64,20 +120,23 @@ fun choose_option()
 {
     when(choice)
     {
-        1 -> add_contact()
-        2 -> remove_contact()
-        3 -> null
-        4 -> show_contacts()
-        5 -> Show_in_alphabeticall_order()
-        6 -> Save_to_file()
-        7 -> Read_to_file()
+        1.toString() -> add_contact()
+        2.toString() -> remove_contact()
+        3.toString() -> Change_information_of_contact()
+        4.toString() -> show_contacts()
+        5.toString() -> Show_in_alphabetical_order()
+        6.toString() -> Save_to_file()
+        7.toString() -> Read_to_file()
         else -> {
-            println("please choose another number")
+            println("please choose a number between 1 and 7")
         }
+    }
 }
 fun main(args: Array<String>)
 {
-    meny()
-    choice = readln()
-    choose_option()
+    while (choice != 8.toString()){
+        meny()
+        choice = readln()
+        choose_option()
+    }
 }
