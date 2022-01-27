@@ -1,3 +1,7 @@
+import java.io.File
+import java.io.PrintWriter
+import java.io.InputStream
+
 val informationlist = ArrayList<Person>()
 var name: String = null.toString()
 var Lastname: String = null.toString()
@@ -10,6 +14,8 @@ var new_name: String = null.toString()
 var new_surname: String = null.toString()
 var new_phonenumber: String = null.toString()
 var new_email_adress: String = null.toString()
+var filename :String = null.toString()
+var content:String = null.toString()
 
 fun meny()
 {
@@ -61,7 +67,7 @@ fun Show_in_alphabetical_order()
     }
 }
 
-fun Change_information_of_contact{
+fun Change_information_of_contact(){
     println("Please write the email of the adress that you want to change!")
     email_adress = readln()
     for (number: Int in 0..informationlist.count()-1)
@@ -95,38 +101,47 @@ fun Change_information_of_contact{
             informationlist[number].email = new_email_adress
         }
 
-        when(choice2){
-            1.toString() -> change_name()
-            2.toString() -> change_Surname()
-            3.toString() -> change_phonenumber()
-            4.toString() -> change_email()
+        when(choice2.toInt()){
+            1 -> change_name()
+            2 -> change_Surname()
+            3 -> change_phonenumber()
+            4 -> change_email()
         }
     }
 }
 
 
-fun Read_to_file()
+fun Read_from_file()
 {
-    //Help Jonas
-
+    val file = File("file.txt")
+    var ins:InputStream = file.inputStream()
+    println(content)
 }
 
-fun Save_to_file()
+fun Write_to_file()
 {
-    //Help Jonas
+    content = informationlist.toString()
+    val writer = PrintWriter("file.txt")
+
+    for (i in informationlist){
+
+    }
+
+    writer.append(content)
+    writer.close()
 }
 
 fun choose_option()
 {
-    when(choice)
+    when(choice.toInt())
     {
-        1.toString() -> add_contact()
-        2.toString() -> remove_contact()
-        3.toString() -> Change_information_of_contact()
-        4.toString() -> show_contacts()
-        5.toString() -> Show_in_alphabetical_order()
-        6.toString() -> Save_to_file()
-        7.toString() -> Read_to_file()
+        1 -> add_contact()
+        2 -> remove_contact()
+        3 -> Change_information_of_contact()
+        4 -> show_contacts()
+        5 -> Show_in_alphabetical_order()
+        6 -> Write_to_file()
+        7 -> Read_from_file()
         else -> {
             println("please choose a number between 1 and 7")
         }
