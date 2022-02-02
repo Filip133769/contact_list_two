@@ -12,7 +12,7 @@ var email_adress: String = null.toString()
 var new_surname: String = null.toString()
 var new_phonenumber: String = null.toString()
 var new_email_adress: String = null.toString()
-var filename :String = null.toString()
+var filename :String = "File.txt"
 var content:String = null.toString()
 
 fun meny() //Skapar meny
@@ -110,23 +110,21 @@ fun Change_information_of_contact() // Ändrar information av en kontakt i lista
     }
 }
 
-
 fun Read_from_file() //Läser från fil
 {
-    val bufferedReader: BufferedReader = File("file.txt").bufferedReader()
+    val bufferedReader: BufferedReader = File("File.txt").bufferedReader()
     content = bufferedReader.use { it.readText() }
     println(content)
 }
 
 fun Write_to_file() // Skriver till fil
 {
-    File(filename).bufferedWriter()
     File(filename).bufferedWriter().use { out ->
         for (number: Int in 0..informationlist.count()-1)
         {
-            out.write(informationlist[number].firstname + "\b")
-            out.write(informationlist[number].surname + "\b")
-            out.write(informationlist[number].phonenumber + "\b")
+            out.write(informationlist[number].firstname + " ")
+            out.write(informationlist[number].surname + " ")
+            out.write(informationlist[number].phonenumber + " ")
             out.write(informationlist[number].email + "\n")
         }
     }
