@@ -1,6 +1,5 @@
 import java.io.File
-import java.io.PrintWriter
-import java.io.InputStream
+import java.io.BufferedReader
 
 val informationlist = ArrayList<Person>()
 var name: String = null.toString()
@@ -10,14 +9,13 @@ var email: String = null.toString()
 var choice: String = null.toString()
 var choice2: String = null.toString()
 var email_adress: String = null.toString()
-var new_name: String = null.toString()
 var new_surname: String = null.toString()
 var new_phonenumber: String = null.toString()
 var new_email_adress: String = null.toString()
 var filename :String = null.toString()
 var content:String = null.toString()
 
-fun meny()
+fun meny() //Skapar meny
 {
     println("1. Add contact" +
             "2. Remove contact" +
@@ -28,7 +26,7 @@ fun meny()
             "7. Read contacts from file")
 }
 
-fun show_contacts()
+fun show_contacts() // Skapar en funktion som printar informationlist som innehåller all information om personer
 {
     for (elements in informationlist){
         println(" Firstname:" + elements.firstname +
@@ -38,12 +36,13 @@ fun show_contacts()
     }
 }
 
-fun add_contact(){
+fun add_contact() // Lägger till kontakt till informationlist
+{
     println("Please write name, lastname, phone-number and email on individual lines to add a person. Iff suceded, skapad kontakt wil be displayed ")
     informationlist.add(Person(name, Lastname, phonenumber, email))
 }
 
-fun remove_contact()
+fun remove_contact() // Tar bort en kontakt i listan genom att jämföra emailar och ta bort i fall den finns.
 {
     println("Please write the email adress of the person that you arte trying to remove")
     email_adress = readln()
@@ -56,7 +55,7 @@ fun remove_contact()
     }
 }
 
-fun Show_in_alphabetical_order()
+fun Show_in_alphabetical_order() //Visar listan i alfabetisk ordning via förnamn
 {
     val sortedList = informationlist.sortedWith(compareBy({ it.firstname }))
     for (elements in sortedList){
@@ -67,7 +66,8 @@ fun Show_in_alphabetical_order()
     }
 }
 
-fun Change_information_of_contact(){
+fun Change_information_of_contact() // Ändrar information av en kontakt i listan informationlist
+{
     println("Please write the email of the adress that you want to change!")
     email_adress = readln()
     for (number: Int in 0..informationlist.count()-1)
@@ -111,27 +111,28 @@ fun Change_information_of_contact(){
 }
 
 
-fun Read_from_file()
+fun Read_from_file() //Läser från fil
 {
-    val file = File("file.txt")
-    var ins:InputStream = file.inputStream()
+    val bufferedReader: BufferedReader = File("file.txt").bufferedReader()
+    content = bufferedReader.use { it.readText() }
     println(content)
 }
 
-fun Write_to_file()
+fun Write_to_file() // Skriver till fil
 {
-    content = informationlist.toString()
-    val writer = PrintWriter("file.txt")
-
-    for (i in informationlist){
-
+    File(filename).bufferedWriter()
+    File(filename).bufferedWriter().use { out ->
+        for (number: Int in 0..informationlist.count()-1)
+        {
+            out.write(informationlist[number].firstname + "\b")
+            out.write(informationlist[number].surname + "\b")
+            out.write(informationlist[number].phonenumber + "\b")
+            out.write(informationlist[number].email + "\n")
+        }
     }
-
-    writer.append(content)
-    writer.close()
 }
 
-fun choose_option()
+fun choose_option() // En metod som visar vilka metoder som aktiveras beroende på vilken knapp man trycker på.
 {
     when(choice.toInt())
     {
